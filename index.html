@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>php irc</title>
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <script src="./scripts/main.js" type="module"></script>
+    <script src="./scripts/helpers/helperImports.js" type="module"></script>
+    <!-- <script src="./scripts/scrollbar.js" type="module" defer></script> -->
+   
+   <script>
+        document.onreadystatechange = function(e)
+        {
+            if (document.readyState === 'complete')
+            {
+                const savedNickname = userHelper.getSavedUser();
+                if(!savedNickname)
+                {
+                    userHelper.initializeNewUser();
+                }
+
+            }
+        };
+    </script>
+
+</head>
+<body>
+    <header>
+        <h1>irc or sth</h1>
+    </header>
+    <main>
+        <p id="nicknameElement">your nick</p>
+        <input type="text" id="nickname" placeholder="Enter your nickname">
+        <div class="messages-box">
+            <div id="chat" class="chat"></div>
+            <div class="send-section">
+                <textarea id="message" placeholder="Type your message..."></textarea>
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>
