@@ -8,32 +8,12 @@
     <link rel="stylesheet" href="./styles/reset.css">
     <link rel="stylesheet" href="./styles/main.css">
     <script src="./scripts/main.js" type="module"></script>
-    <script src="./scripts/helpers/helperImports.js" type="module"></script>
-    <!-- <script src="./scripts/scrollbar.js" type="module" defer></script> -->
-   
-   <script>
-        document.onreadystatechange = function(e)
-        {
-            if (document.readyState === 'complete')
-            {
-                const savedNickname = userHelper.getSavedUser();
-                if(!savedNickname)
-                {
-                    userHelper.initializeNewUser();
-                }
-
-            }
-        };
-    </script>
-
 </head>
 <body>
     <header>
         <h1>irc or sth</h1>
     </header>
     <main>
-        <p id="nicknameElement">your nick</p>
-        <input type="text" id="nickname" placeholder="Enter your nickname">
         <div class="messages-box">
             <div id="chat" class="chat"></div>
             <div class="send-section">

@@ -36,7 +36,8 @@
 }
 
   #chat {
-    height: 200px;
+    
+    height: 400px;
     width:500px;
     overflow-y: scroll;
     border: 1px solid #ccc;

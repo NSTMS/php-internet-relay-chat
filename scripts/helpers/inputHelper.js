@@ -1,4 +1,0 @@
-const checkIfMessageHaveCommand = (message) =>{
-
-    return;
-} 
