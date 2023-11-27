@@ -20,7 +20,7 @@ export const showAllComands = () =>{
         const newMessage = createElement('div');
         newMessage.classList.add("message");        
         const messageSpan = createElement("span");
-        messageSpan.textContent = " --" + commands[cmd];
+        messageSpan.textContent = cmd + " --" + commands[cmd];
         newMessage.appendChild(messageSpan);
         chatContainer.appendChild(newMessage);
     }

@@ -18,15 +18,12 @@ document.onreadystatechange = function(e)
 const sendButton = getById('sendButton');
 const messageInput = getById('message');
 
-messageInput.addEventListener('keydown', (e)=>
+messageInput.addEventListener('keyup', (e)=>
 {  
   if (e.key === 'Enter') {
-    const nickname = getSavedUser();
-    const message = messageInput.value;
-    if (nickname && message.trim()){
-      sendMessge(nickname,message);
-      messageInput.value = null;
-    }
+    
+    e.preventDefault();
+    sendButton.click();
   }
 })
 
@@ -34,12 +31,15 @@ sendButton.addEventListener('click', () => {
   const nickname = getSavedUser();
   const message = messageInput.value;
   if (!nickname || !message.trim()){
-    messageInput.value =null;
+    sendMessge(nickname,message,getUsernameColor());
+    messageInput.value.trim();
+    messageInput.value = ""
     return;
   }
   else{
-    sendMessge(nickname,message);
-    messageInput.value = null;
+    sendMessge(nickname,message,getUsernameColor());
+    messageInput.value.trim();
+    messageInput.value = ""
   }
   
 });

@@ -1,4 +1,4 @@
-import {getSavedUser, isValidColor,joinChat, showAllComands,quitChat, changeAllUserMessagesColor,setUserName,getById,createElement,getUsernameColor,clearChat} from "./helperImports.js"
+import {getSavedUser, isValidColor,joinChat, showAllComands,quitChat,setUserName,getById,createElement,getUsernameColor,clearChat, setUserColor} from "./helperImports.js"
 import { commands } from "../consts/commands.js";
 export const messageHasCommand = (message) =>{
 
@@ -10,21 +10,22 @@ export const messageHasCommand = (message) =>{
     const takesQuery = ["/NICK", "/COLOR", "/JOIN"]
 
     if((takesQuery.includes(command) && query == null) || !Object.keys(commands).includes(command)) return null;
-    const sys = "chat : "
+    const sys = "chat";
+    const color = "green";
     switch(command)
     {
 
         case "/NICK":
             setUserName(query);
-            return sys + "nick changed to " + query;
+            return sendMessge(sys,"nick changed to " + query, color);
         case "/ME":
-            return sys + getSavedUser();
+            return sendMessge(sys,getSavedUser(),color);
         case "/QUIT":
             return quitChat();
         case "/JOIN":
-            return sys + joinChat(query);
+            return sendMessge(sys, joinChat(query), color);
         case "/COLOR":
-            if(isValidColor(query)) return sys + changeAllUserMessagesColor(query);
+            if(isValidColor(query)) return sendMessge(sys,setUserColor(query),color);
             return null;
         case "/CLEAR":
         case "/CLS":
@@ -32,20 +33,20 @@ export const messageHasCommand = (message) =>{
         case "/COMMANDS":
             return showAllComands();
         case "/HELP":
-            return sys + "you jokin' there is no help for you";
+            return sendMessge(sys,"you jokin' there is no help for you", color);
         default:
             return null;
     }
 } 
 
 
-export const sendMessge = (nickname, message) =>{
+export const sendMessge = (nickname, message, color) =>{
     const chatContainer = getById('chat');
 
     const newMessage = createElement('div');
     newMessage.classList.add("message");
     const nickNameSpan = createElement("span");
-    nickNameSpan.style.color = getUsernameColor()
+    nickNameSpan.style.color = color
     nickNameSpan.classList.add("nick");
     nickNameSpan.textContent = nickname;
     const messageSpan = createElement("span");
@@ -64,3 +65,7 @@ export const sendMessge = (nickname, message) =>{
       chatContainer.appendChild(commandMessage);
     }
   }
+
+export const trimMessage =(message) =>{
+    
+}
