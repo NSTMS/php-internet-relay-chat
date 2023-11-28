@@ -1,9 +1,10 @@
 import { commands } from "../consts/commands.js";
-import { createElement,getById } from "../imports.js";
+import { createElement,getById, sendMessge } from "../imports.js";
 export const quitChat = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("username-color");
     console.log("nie mam pojęcia jak to ma działać");
+    window.close();
     return "you leave room"
 
 }
@@ -14,17 +15,16 @@ export const joinChat = (room) =>{
 }
 
 export const showAllComands = () =>{
-    const chatContainer = getById('chat');
     for(let cmd in commands)
     {
-        const newMessage = createElement('div');
-        newMessage.classList.add("message");        
-        const messageSpan = createElement("span");
-        messageSpan.textContent = cmd + " --" + commands[cmd];
-        newMessage.appendChild(messageSpan);
-        chatContainer.appendChild(newMessage);
+        sendMessge('chat',cmd + " - " + commands[cmd], 'green','rgb(239, 108, 0)', true);
     }
     return null;
+}
+
+export const showMessagesCounter = () => {
+    const userMessages = document.querySelectorAll("div.message");
+    return userMessages.length;
 }
 
 export const clearChat = () =>{

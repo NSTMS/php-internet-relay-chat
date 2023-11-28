@@ -1,18 +1,20 @@
 import {longPolling} from "./chat.js"
-import { getRandomColor,setUserColor, getSavedUser,initializeNewUser,createElement,getById,getUsernameColor, messageHasCommand,sendMessge} from "./imports.js";
+import { getRandomColor,setUserColor, getSavedUser,initializeNewUser,getById,getUsernameColor,sendMessge, trimMessage} from "./imports.js";
 
-document.onreadystatechange = function(e)
-{
-    if (document.readyState === 'complete')
-    {
-        let savedNickname = getSavedUser();
-        if(!savedNickname) 
-        {
-          savedNickname = initializeNewUser();
-          setUserColor(getRandomColor())
-        }
+document.addEventListener('DOMContentLoaded', function() {
+  var elements = document.querySelectorAll('#chat'), el;
+  for (var i = 0; i < elements.length, el = elements[i]; i++) {
+    if (el.scrollHeight > el.clientHeight) {
+      SimpleScrollbar.initEl(el);
     }
-};
+  }
+  let savedNickname = getSavedUser();
+  if(!savedNickname) 
+  {
+    savedNickname = initializeNewUser();
+    setUserColor(getRandomColor())
+  }
+});
 
 
 const sendButton = getById('sendButton');
@@ -21,7 +23,6 @@ const messageInput = getById('message');
 messageInput.addEventListener('keyup', (e)=>
 {  
   if (e.key === 'Enter') {
-    
     e.preventDefault();
     sendButton.click();
   }
@@ -29,18 +30,17 @@ messageInput.addEventListener('keyup', (e)=>
 
 sendButton.addEventListener('click', () => {
   const nickname = getSavedUser();
-  const message = messageInput.value;
-  if (!nickname || !message.trim()){
+  const message = trimMessage(messageInput.value);
+  if (nickname && message.trim()){
     sendMessge(nickname,message,getUsernameColor());
     messageInput.value.trim();
     messageInput.value = ""
     return;
   }
-  else{
-    sendMessge(nickname,message,getUsernameColor());
-    messageInput.value.trim();
+  else if(!nickname)
+  {
+    sendMessge("chat","please refresh page","green","rgb(239, 108, 0)",true);
     messageInput.value = ""
-  }
-  
+  }  
 });
 

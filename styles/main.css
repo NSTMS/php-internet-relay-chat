@@ -1,47 +1,48 @@
-   /* Example CSS styles, customize as needed */
-  
-   body{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap:1rem;
-    }
-    header{
-        margin-top:1rem;
-    }
-    main{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap:1rem;
-    }
-   
+@import url("./root.css");
 
-
-   #nickname, #message {
-    width: 300px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
-  #sendButton {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-  #chat {
-    
-    height: 400px;
-    width:500px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
+header {
+  margin-top: 1rem;
+}
+h1{
+  color:var(--main-accent);
+  border-radius: var(--radius);
+  width:var(--chat--width);
+  height:60px;
+  display: grid;
+  place-content: center;
+  background-color: var(--main-light);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
 
 
+::-webkit-scrollbar {
+  width: 10px;
+ }
+ 
+ ::-webkit-scrollbar-thumb {
+  background:var(--main-accent);
+  border-radius: 10px; /* this will round the corners of the scrollbar */
+ }
+ 
+ ::-webkit-scrollbar-thumb:hover {
+  background: var(--main-light);
+ }
+ 
+ ::-webkit-scrollbar-thumb:active {
+  /* background:#61afef; */
+ }

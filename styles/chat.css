@@ -1,0 +1,75 @@
+@import url("./root.css");
+
+body {
+    background-color: var(--main-dark); 
+    color: var(--main-light);
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+ }
+ 
+ .messages-box {
+    display: flex;
+    flex-direction: column;
+    height: var(--height);
+    width: var(--width);
+ }
+ 
+ .chat {
+    height:var(--chat--height);
+    width: var(--chat--width);
+    overflow-y:auto;
+    flex-grow: 1;
+    padding: 20px;
+    border-top: 1px solid var(--main-light);
+}
+.message{
+    margin:5px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.message .nick{
+    font-size: 13px;
+    padding:5px;
+}
+
+.message span:not(.nick){
+    padding:10px;
+    color:var(--main-dark); 
+    width:fit-content;
+    border-radius: var(--radius);
+}
+ 
+.user{
+   align-items: start;
+}
+ 
+ .send-section {
+    display: flex;
+    padding: 20px;
+    margin-top:20px;
+    border-top: 1px solid var(--main-light);
+    width:100%;
+ }
+ 
+ #message {
+    width:80%;
+    height:50px;
+    resize: none;
+    padding:15px;
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+ }
+ 
+ #sendButton {
+    width:20%;
+    height:50px;
+    background-color:var(--main-accent);
+    color: var(--main-light);
+    border: none;
+    padding:10px;
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    cursor: pointer;
+ }
+ 
