@@ -10,8 +10,8 @@ export const messageHasCommand = (message) =>{
 
     if((takesQuery.includes(command) && query == null) || !Object.keys(commands).includes(command)) return null;
     const sys = "chat";
-    const color = "rgb(239, 108, 0)";
-    const bg = "rgb(239, 108, 0)";
+    const color = "#80bfff"; //rgb(239, 108, 0)
+    const bg = "#80bfff";
     switch(command)
     {
         case "/CHAT":
@@ -48,20 +48,23 @@ export const messageHasCommand = (message) =>{
 } 
 
 
-export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false) =>{
+export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false,counter=-1) =>{
     const chatContainer = getById('chat');
 
     const newMessage = createElement('div');
     if(isChat) newMessage.classList.add("user");
     newMessage.classList.add("message");
-    const nickNameSpan = createElement("span");
-    nickNameSpan.style.color = color;
-    nickNameSpan.classList.add("nick");
-    nickNameSpan.textContent = nickname;
     const messageSpan = createElement("span");
     messageSpan.style.backgroundColor = bg;
     messageSpan.textContent = message;
-    newMessage.appendChild(nickNameSpan);
+    if(counter == -1)
+    {
+        const nickNameSpan = createElement("span");
+        nickNameSpan.style.color = color;
+        nickNameSpan.classList.add("nick");
+        nickNameSpan.textContent = nickname;
+        newMessage.appendChild(nickNameSpan);
+    }
     newMessage.appendChild(messageSpan);
     chatContainer.appendChild(newMessage);
 

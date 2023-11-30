@@ -15,9 +15,13 @@ export const joinChat = (room) =>{
 }
 
 export const showAllComands = () =>{
+    //rgb(239, 108, 0)
+    let help = -1;
     for(let cmd in commands)
     {
-        sendMessge('chat',cmd + " - " + commands[cmd], 'green','rgb(239, 108, 0)', true);
+        sendMessge('chat',cmd + " - " + commands[cmd], '#80bfff','#80bfff', true,help);
+        if(help == -1) help = 0; 
+        
     }
     return null;
 }
