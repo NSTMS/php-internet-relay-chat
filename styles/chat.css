@@ -27,6 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: end;
+    justify-content: center;
 }
 .message .nick{
     font-size: 13px;
@@ -36,10 +37,20 @@ body {
 .message span:not(.nick){
     padding:10px;
     color:var(--main-dark); 
-    width:fit-content;
     border-radius: var(--radius);
+    display: flex;
+    height:auto;
+    justify-content: center;
+    overflow-wrap: anywhere;
 }
- 
+.message-content > span{
+    width: 1.4em !important;
+    height: 1.4em !important;
+    padding:5px !important;
+    font-size:13px !important;
+    box-sizing: initial !important;
+}
+
 .user{
    align-items: start;
 }

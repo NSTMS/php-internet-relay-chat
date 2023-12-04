@@ -19,7 +19,7 @@ export const messageHasCommand = (message) =>{
         case "/NICK":
             const nick = separateNick(splitted);
             setUserName(nick);
-            return sendMessge(sys,`nick changed to: ${nick}`, color,bg, true);
+            return sendMessge(sys,`nick changed to: ${nick}`, color,bg, true, -1,true);
         case "/ME":
             return sendMessge(sys,`your are : ${getSavedUser()}`,color,bg, true);
         case "/QUIT":
@@ -48,7 +48,7 @@ export const messageHasCommand = (message) =>{
 } 
 
 
-export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false,counter=-1) =>{
+export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false,counter=-1, changingNick=false) =>{
     const chatContainer = getById('chat');
 
     const newMessage = createElement('div');
@@ -56,6 +56,7 @@ export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false,
     newMessage.classList.add("message");
     const messageSpan = createElement("span");
     messageSpan.style.backgroundColor = bg;
+    messageSpan.classList.add("message-content");
     messageSpan.textContent = message;
     if(counter == -1)
     {
@@ -79,7 +80,8 @@ export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false,
       chatContainer.appendChild(commandMessage);
     }
     scrollToBottom(chatContainer);
-
+    if(changingNick) $('.message-content').unemoticonize();
+    else $('.message-content').emoticonize();
 }
 
 export const trimMessage =(message) =>{
