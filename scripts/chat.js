@@ -1,50 +1,42 @@
-export function longPolling() {
-    fetch("../php/index.php")
-        .then(response => response.text())
-        .then(data => {
-            // Process the received messages
-            if (data) {
-                console.log(data);
-            }
-            longPolling();
-        })
-        .catch(error => {
-            console.error(error);
-            setTimeout(longPolling, 1000); // 1 second
-        });
-}
+import {getUsernameColor} from "./helpers/colorHelper";
+import {getSavedUser} from "./helpers/userHelper";
+import {sendMessge} from "./helpers/messageHelper";
 
-async function loadMessages() {
+const bg = "rgb(128, 191, 255)";
+
+
+export async function loadMessages(lastSync) {
     try {
-        const response = await fetch('irc.php', {
-            method: "GET"
+        const response = await fetch('../php/index.php', {
+            method: "POST",
+            body:`timestamp=${lastSync}`
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            //throw new Error(`HTTP error! status: ${response.status}`);
+            console.log(`HTTP error! status: ${response.status}`)
+            setTimeout(async()=>await loadMessages(Date.now()+1000), 1000); // 1 second
         }
         const messages = await response.json();
-        const messageContainer = document.getElementById('messages');
-        //clearChat()
-        messageContainer.innerHTML = '';
         for (let i = 0; i < messages.length; i++) {
-            const message = messages[i];
-            // dodaj sendMessage()
-            messageContainer.innerHTML += '<p><strong>' + message.username + ':</strong> ' + message.message + '</p>';
+            sendMessge(messages[i].username, messages[i].message, messages[i].color,bg,true);
         }
+
+        await loadMessages(Date.now())
     } catch (error) {
         console.error('There has been a problem with your fetch operation: ', error);
+        setTimeout(async()=>await loadMessages(Date.now()+1000), 1000); // 1 second
     }
 }
 
-async function sendMessageToDb() {
-    const username = document.getElementById('username').value;
-    const message = document.getElementById('message').value;
+async function sendMessageToDb(username,message) {
+    const body = `username=${username}&message=${message}&color=${getUsernameColor()}`
     if (username && message) {
         try {
-            const response = await fetch('irc.php', {
+            const body = `username=${username}&message=${message}&color=${getUsernameColor()}`;
+            const response = await fetch('../php/index.php', {
                 method: 'POST', headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                }, body: 'username=' + username + '&message=' + message,
+                }, body: body
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -54,3 +46,15 @@ async function sendMessageToDb() {
         }
     }
 }
+
+
+// remove old messages from database
+
+async function removeOldMessages(){
+    try{
+
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation: ', error);
+    }
+}
+

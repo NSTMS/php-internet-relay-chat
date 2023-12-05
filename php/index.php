@@ -7,8 +7,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-   $sql = "SELECT id, username, message, timestamp FROM messages ORDER BY timestamp DESC";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['timestamp'])) {
+   $sql = sprintf("SELECT username, message, timestamp FROM messages ORDER BY timestamp DESC WHERE timestamp >=%",);
    $result = $conn->query($sql);
 
    $messages = array();
@@ -19,10 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
    }
    echo json_encode($messages);
 
-} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST('username') and isset($_POST('message')) {
    $username = $_POST['username'];
    $message = $_POST['message'];
-   $sql = "INSERT INTO messages (username, message) VALUES (?, ?)";
+
+   $sql = sprintf"INSERT INTO messages (username, message,timestamp) VALUES (?, ?, ?)", $username, $message, date());
    $stmt = $conn->prepare($sql);
    $stmt->bind_param("ss", $username, $message);
    $stmt->execute();

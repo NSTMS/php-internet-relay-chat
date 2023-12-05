@@ -1,4 +1,3 @@
-import {longPolling} from "./chat.js"
 import { getRandomColor,setUserColor, getSavedUser,initializeNewUser,getById,getUsernameColor,sendMessge, trimMessage} from "./imports.js";
 
 document.addEventListener('DOMContentLoaded', function() {
