@@ -1,4 +1,5 @@
-import { getRandomColor,setUserColor, getSavedUser,initializeNewUser,getById,getUsernameColor,sendMessge, trimMessage} from "./imports.js";
+import { getRandomColor,setUserColor, getSavedUser,initializeNewUser,getById,getUsernameColor,writeMessage, trimMessage} from "./imports.js";
+import {sendMessageToDb} from "./chat.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   var elements = document.querySelectorAll('#chat'), el;
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let savedNickname = getSavedUser();
   if(!savedNickname) 
   {
-    savedNickname = initializeNewUser();
+    initializeNewUser();
     setUserColor(getRandomColor())
   }
 
@@ -32,14 +33,15 @@ sendButton.addEventListener('click', () => {
   const nickname = getSavedUser();
   const message = trimMessage(messageInput.value);
   if (nickname && message.trim()){
-    sendMessge(nickname,message,getUsernameColor());
+    writeMessage(nickname,message,getUsernameColor());
+    // sendMessageToDb(nickname,message,getUsernameColor());
     messageInput.value.trim();
     messageInput.value = ""
     return;
   }
   else if(!nickname)
   {
-    sendMessge("chat","please refresh page","green","rgb(239, 108, 0)",true);
+    writeMessage("chat","please refresh page","green","rgb(239, 108, 0)",true);
     messageInput.value = ""
   }  
 });

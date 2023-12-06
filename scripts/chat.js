@@ -1,14 +1,16 @@
-import {getUsernameColor} from "./helpers/colorHelper";
-import {getSavedUser} from "./helpers/userHelper";
-import {sendMessge} from "./helpers/messageHelper";
+import {getUsernameColor} from "./helpers/colorHelper.js";
+import {writeMessage} from "./helpers/messageHelper.js";
 
 const bg = "rgb(128, 191, 255)";
 
-
+loadMessages(Date.now());
 export async function loadMessages(lastSync) {
     try {
-        const response = await fetch('../php/index.php', {
+        const response = await fetch('php/getMessages.php', {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
             body:`timestamp=${lastSync}`
         });
         if (!response.ok) {
@@ -18,22 +20,21 @@ export async function loadMessages(lastSync) {
         }
         const messages = await response.json();
         for (let i = 0; i < messages.length; i++) {
-            sendMessge(messages[i].username, messages[i].message, messages[i].color,bg,true);
+            writeMessage(messages[i].username, messages[i].message, messages[i].color,bg,true);
         }
 
-        await loadMessages(Date.now())
+//       await loadMessages(Date.now())
     } catch (error) {
         console.error('There has been a problem with your fetch operation: ', error);
-        setTimeout(async()=>await loadMessages(Date.now()+1000), 1000); // 1 second
+        //setTimeout(async()=>await loadMessages(Date.now()+1000), 1000); // 1 second
     }
 }
 
-async function sendMessageToDb(username,message) {
-    const body = `username=${username}&message=${message}&color=${getUsernameColor()}`
+export async function sendMessageToDb(username,message,color) {
     if (username && message) {
         try {
-            const body = `username=${username}&message=${message}&color=${getUsernameColor()}`;
-            const response = await fetch('../php/index.php', {
+            const body = `username=${username}&message=${message}&color=${color}`;
+            const response = await fetch('php/sendMessage.php', {
                 method: 'POST', headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }, body: body

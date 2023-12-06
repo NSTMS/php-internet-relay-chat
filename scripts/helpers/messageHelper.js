@@ -1,5 +1,6 @@
 import {getSavedUser, isValidColor,joinChat, showAllComands,quitChat,setUserName,getById,createElement,getUsernameColor,clearChat, setUserColor, showMessagesCounter} from "./helperImports.js"
 import { commands } from "../consts/commands.js";
+import {sendMessageToDb} from "../chat.js";
 export const messageHasCommand = (message) =>{
 
     const splitted = message.split(" "); 
@@ -15,42 +16,41 @@ export const messageHasCommand = (message) =>{
     switch(command)
     {
         case "/CHAT":
-            return sendMessge(sys,`yo, whazzup?`, color,bg, true);
+            return writeMessage(sys,`yo, whazzup?`, color,bg, true);
         case "/NICK":
             const nick = separateNick(splitted);
             setUserName(nick);
-            return sendMessge(sys,`nick changed to: ${nick}`, color,bg, true, -1,true);
+            return writeMessage(sys,`nick changed to: ${nick}`, color,bg, true, -1,true);
         case "/ME":
-            return sendMessge(sys,`your are : ${getSavedUser()}`,color,bg, true);
+            return writeMessage(sys,`your are : ${getSavedUser()}`,color,bg, true);
         case "/QUIT":
             return quitChat();
         case "/JOIN":
-            return sendMessge(sys, joinChat(query), color,bg, true);
+            return writeMessage(sys, joinChat(query), color,bg, true);
         case "/COLOR":
             if(isValidColor(query))
             {
                 setUserColor(query) 
-                return sendMessge(sys,`color changed to: ${getUsernameColor()}`,color,bg, true);
+                return writeMessage(sys,`color changed to: ${getUsernameColor()}`,color,bg, true);
             }
-            return sendMessge(sys,`invalid color value`,color,bg, true);
+            return writeMessage(sys,`invalid color value`,color,bg, true);
         case "/CLEAR":
         case "/CLS":
             return clearChat();
         case "/COMMANDS":
             return showAllComands();
         case "/HELP":
-            return sendMessge(sys,"you jokin', there is no help for you", color,bg, true);
+            return writeMessage(sys,"you jokin', there is no help for you", color,bg, true);
         case "/COUNTER":
-            return sendMessge(sys,`there are ${showMessagesCounter()} messages in this chat`, color,bg, true );
+            return writeMessage(sys,`there are ${showMessagesCounter()} messages in this chat`, color,bg, true );
         default:
             return null;
     }
 } 
 
 
-export const sendMessge = (nickname, message, color, bg="#eceff4", isChat=false,counter=-1, changingNick=false) =>{
+export const writeMessage = (nickname, message, color, bg="#eceff4", isChat=false,counter=-1, changingNick=false) =>{
     const chatContainer = getById('chat');
-
     const newMessage = createElement('div');
     if(isChat) newMessage.classList.add("user");
     newMessage.classList.add("message");

@@ -1,5 +1,5 @@
 import { commands } from "../consts/commands.js";
-import { createElement,getById, sendMessge } from "../imports.js";
+import { createElement,getById, writeMessage } from "../imports.js";
 export const quitChat = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("username-color");
@@ -19,7 +19,7 @@ export const showAllComands = () =>{
     let help = -1;
     for(let cmd in commands)
     {
-        sendMessge('chat',cmd + " - " + commands[cmd], '#80bfff','#80bfff', true,help);
+        writeMessage('chat',cmd + " - " + commands[cmd], '#80bfff','#80bfff', true,help);
         if(help == -1) help = 0; 
         
     }
