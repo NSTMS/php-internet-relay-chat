@@ -8,10 +8,8 @@ if ($conn->connect_error) {
 }
 
  if ($_SERVER['REQUEST_METHOD'] === 'DELETE')) {
-
-   $sql = sprint"INSERT INTO messages (username, message) VALUES (?, ?)";
+   $sql = "DELETE FROM messages where ";
    $stmt = $conn->prepare($sql);
-   $stmt->bind_param("ss", $username, $message);
    $stmt->execute();
 }
 $conn->close();
