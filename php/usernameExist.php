@@ -1,5 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *")
+header('Content-Type: text/plain');
 
 require_once 'connection.php';
 
@@ -13,12 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])){
   $sql = sprintf("SELECT * FROM messages WHERE username='%s'",$username);
   $result =  $conn->query($sql);
   $res = "false";
-  $counter = 0;
-  while ($row = $result->fetch_assoc()) {
-    $counter++;
-  }
-  if($counter !=0 ) $res = "true";
-  header('Content-Type: text/plain');
+  if(mysqli_num_rows($result) != 0) $res = "true";
   echo $res;
 }
 

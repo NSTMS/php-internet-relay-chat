@@ -19,11 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['lastSync'])){
  }
  $sql = "SELECT * FROM messages";
  $result = $conn->query($sql);
- $counter = 0;
- while($row = $result->fetch_assoc()){
-    $counter++;
- }
- if($counter > 50)
+ if(mysqli_num_rows($result) > 50)
  {
     $sql = "DELETE FROM messages WHERE 1=1";
     $conn->query($sql);
