@@ -13,7 +13,8 @@ export const setUserName = (nickname) => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const exists = await response.text();
-                if (exists === "true") resolve(false);
+                console.log(exists);
+                if (exists == "true") resolve(false);
                 else {
                     sessionStorage.setItem('prev-username', getSavedUser());
                     sessionStorage.setItem('username', nickname);

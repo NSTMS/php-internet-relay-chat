@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['lastSync'])){
  $messages = array();
  $lastSync = $_GET['lastSync'];
  $sql = sprintf("SELECT username, message,color, timestamp FROM messages WHERE timestamp >=%s ORDER BY timestamp DESC",$lastSync);
- //$sql = "SELECT username, message,color, timestamp FROM messages";
  $result = $conn->query($sql);
  while($row = $result->fetch_assoc()){
     array_push($messages, $row);
