@@ -31,9 +31,18 @@ export const setUserName = (nickname) => {
 
 export const getSavedUser = () => sessionStorage.getItem('username');
 
+const getNick = () =>{
+    let nickname = prompt("Enter your nickname");
+    if (nickname != null) setUserName(nickname).then(res =>{
+        if(!res){
+            getNick();
+        }
+        else{
+            setUserColor(getRandomColor());
+        }
+    });
+}
+
 export const initializeNewUser = () => {
-    let nickname = prompt("Please enter your nickname");
-    if (nickname != null) setUserName(nickname).then();
-    setUserColor(getRandomColor());
-    return nickname;
+    getNick();
 };

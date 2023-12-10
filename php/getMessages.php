@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['lastSync'])){
  }
  $sql = "SELECT * FROM messages";
  $result = $conn->query($sql);
- if(mysqli_num_rows($result) > 50)
+ if(mysqli_num_rows($result) > 250)
  {
-    $sql = "DELETE FROM messages WHERE 1=1";
+    $sql = "DELETE FROM messages LIMIT 100";
     $conn->query($sql);
  }
  header('Content-Type: application/json');
